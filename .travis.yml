@@ -4,11 +4,11 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - pip install pytest3
+
 
 script:
   - pytests
 
 after_success:
   - coveralls
-
-  
