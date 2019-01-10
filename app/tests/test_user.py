@@ -12,15 +12,16 @@ class TestQuestioner(unittest.TestCase):
         self.app = create_app("testing")
         self.client = self.app.test_client()
         self.user_data = {
-                            'id' : 1,
-                            'firstname' : "james",
-                            'lastname' : "Kabochi",
-                            'othername' : "Gakuru",
-                            'email' : "bochirgfx@gmail.com",
-                            'phoneNumber' : "254722241161",
-                            'username' : "bochie",
-                            'registered' : "12-2-2019",
-                            'isAdmin' : False,
+                            "firstname" : "james",
+                            "lastname" : "Kabochi",
+                            "othername" : "Gakuru",
+                            "email" : "bochirgfx@gmail.com",
+                            "phoneNumber" : "254722241161",
+                            "username" : "bochie",
+                            "registered" : "12-2-2019",
+                            "isAdmin" : False,
+                            "password":	"password",
+                            "confirm_password":	"password"
                             }
 
 
