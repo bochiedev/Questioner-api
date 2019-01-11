@@ -28,4 +28,4 @@ def register():
                                      {"message": "User created successfull!"})), 201
     else:
         return make_response(
-            jsonify({"message": "Passwords don't match"})), 409
+            jsonify({"message": "Passwords don't match"})), 400
