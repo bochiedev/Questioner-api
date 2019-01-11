@@ -12,7 +12,6 @@ class TestQuestioner(unittest.TestCase):
         self.app = create_app("testing")
         self.client = self.app.test_client()
         self.user_data = {
-                            'id' : 1,
                             'firstname' : "james",
                             'lastname' : "Kabochi",
                             'othername' : "Gakuru",
@@ -26,7 +25,6 @@ class TestQuestioner(unittest.TestCase):
 
                             }
         self.wrong_user_data = {
-                            'id' : 1,
                             'firstname' : "james",
                             'lastname' : "Kabochi",
                             'othername' : "Gakuru",

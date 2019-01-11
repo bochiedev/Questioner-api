@@ -1,5 +1,6 @@
 from flask import Flask
 from app.api.v1.views.main_views import version1 as v1
+from app.api.v1.views.auth import auth as auth
 from instance.config import app_config
 
 def create_app(config_name):
@@ -7,5 +8,7 @@ def create_app(config_name):
     app.config.from_object(app_config)
 
     app.register_blueprint(v1)
+    app.register_blueprint(auth)
+
 
     return app
