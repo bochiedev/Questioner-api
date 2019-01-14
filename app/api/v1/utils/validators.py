@@ -6,8 +6,6 @@ class Validator():
 
     def __init__(self, data):
         self.data = data
-        self.email = data['email']
-        self.password = data['password']
 
     def check_fields(self):
         for key, value in self.data.items():
@@ -23,7 +21,7 @@ class Validator():
                 return resp
 
     def check_email(self):
-        if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", self.email):
+        if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", self.data['email']):
             resp = {
                 "message": 'Please enter a valid email'
             }
@@ -35,7 +33,7 @@ class Validator():
             return resp
 
     def check_password(self):
-        password = self.password
+        password = self.data['password']
 
         if len(password) < 6:
             resp = {
@@ -69,5 +67,12 @@ class Validator():
         else:
             resp = {
                 "message": True
+            }
+            return resp
+
+    def pass_match(self):
+        if self.data['password'] != self.data['confirm_password']:
+            resp = {
+                "message": "password does not match"
             }
             return resp

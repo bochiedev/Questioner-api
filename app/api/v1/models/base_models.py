@@ -69,4 +69,4 @@ class BaseModels:
             return "no data to save"
 
         db.append(data)
-        return "Saved successfully"
+        return data

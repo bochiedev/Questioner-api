@@ -53,7 +53,8 @@ class UserModel(BaseModels):
         self.username = username
         self.registered = datetime.now()
         self.password = password
-        self.db = BaseModels("user")
+        super().__init__("user")
+
 
 
     def save(self):
@@ -70,6 +71,5 @@ class UserModel(BaseModels):
             "password": self.password,
             'isAdmin': False,
         }
-        _b_model = BaseModels(db="user")
-        save_as = self.db.save_req(data=user)
+        save_as = self.save_req(data=user)
         return save_as

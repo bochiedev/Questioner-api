@@ -1,24 +1,24 @@
-from flask import Blueprint, jsonify, request, make_response
-from flask import Blueprint
-from app.api.v1.models.meetup_models import Meetup
+from flask import jsonify, request, make_response
+from app.api.v1.models.meetup_models import MeetupModel
+from flask_restful import Resource
 
-meetup = Blueprint('meetup', __name__, url_prefix='/api/v1/meetup/')
+class Meetup(Resource):
+    def get(self):
+        meetups = MeetupModel().return_data()
+        return make_response(jsonify({'meetups':meetups}),200)
+
+    def post(self):
+        req_data = request.get_json()
+        location = req_data['location']
+        images = req_data['images']
+        topic = req_data['topic']
+        happeningOn = req_data['happeningOn']
+        tags = req_data['tags']
+        createdBy = req_data['createdBy']
+        venue = req_data['venue']
+        time = req_data['time']
 
 
-@meetup.route('/create', methods=['POST'])
-def create_meetup():
-    req_data = request.get_json()
-    location = req_data['location']
-    images = req_data['images']
-    topic = req_data['topic']
-    happeningOn = req_data['happeningOn']
-    tags = req_data['tags']
-    createdBy = req_data['createdBy']
-    venue = req_data['venue']
-    time = req_data['time']
-
-
-    new_meetup = Meetup(location, happeningOn, tags, images, topic, createdBy, venue ,time)
-    meetup = new_meetup.register_meetup()
-
-    return make_response(jsonify(status=201,data=meetup)),201
+        _b_save = MeetupModel(location, happeningOn, tags, images, topic, createdBy, venue ,time)
+        resp = _b_save.save()
+        return make_response(jsonify({'data': resp, "status": 201}), 201)
