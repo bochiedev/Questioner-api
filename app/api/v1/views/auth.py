@@ -1,31 +1,50 @@
-from flask import Blueprint, jsonify, request, make_response
-from flask import Blueprint
-from app.api.v1.models.auth_models import User
+from flask import jsonify, request, make_response
+from app.api.v1.models.auth_models import UserModel
+from flask_restful import Resource
+from app.api.v1.utils.validators import Validator
+import sys
 
-auth = Blueprint('auth', __name__, url_prefix='/api/v1/auth/')
 
+class User(Resource):
+    def get(self):
+        users = UserModel().return_data()
+        return make_response(jsonify({'users': users}), 200)
 
-@auth.route('/register', methods=['POST'])
-def register():
-    data = request.get_json()
-    firstname = data['firstname']
-    lastname = data['lastname']
-    othername = data['othername']
-    email = data['email']
-    phoneNumber = data['phoneNumber']
-    username = data['username']
-    registered = data['registered']
-    isAdmin = data['isAdmin']
-    password = data['password']
-    confirm_password = data['confirm_password']
+    def post(self):
+        data = request.get_json()
+        validate = Validator(data)
 
-    if password == confirm_password:
-        new_user = User(firstname, lastname, othername,
-                        phoneNumber, username, email, password)
-        user = new_user.register_user()
+        validator = {
+            "check_fields": validate.check_fields(),
+            "check_password": validate.check_password(),
+            "check_email": validate.check_email(),
 
-        return make_response(jsonify(user,
-                                     {"message": "User created successfull!"})), 201
-    else:
-        return make_response(
-            jsonify({"message": "Passwords don't match"})), 400
+        }
+
+        for key, value in validator.items():
+
+            if value['message'] == True:
+                firstname = data['firstname']
+                lastname = data['lastname']
+                othername = data['othername']
+                email = data['email']
+                phoneNumber = data['phoneNumber']
+                username = data['username']
+                registered = data['registered']
+                isAdmin = data['isAdmin']
+                password = data['password']
+                confirm_password = data['confirm_password']
+
+                if password == confirm_password:
+                    _b_save = UserModel(firstname, lastname, othername,
+                                        phoneNumber, username, email, password)
+
+                    resp = _b_save.save()
+                    return make_response(jsonify({'message': resp, "status": 201}), 201)
+
+                else:
+                    return make_response(jsonify({"error": "Passwords don't match",
+                                                  "status": 400}), 400)
+            else:
+                return make_response(
+                    jsonify({"error": '{}'.format(value['message']), "status": 400}), 400)
