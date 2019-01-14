@@ -20,8 +20,8 @@ class TestQuestioner(unittest.TestCase):
                             'username' : "bochie",
                             'registered' : "12-2-2019",
                             'isAdmin' : False,
-                            'password':"password",
-                            'confirm_password':"password"
+                            'password':"Password2@",
+                            'confirm_password':"Password2@"
 
                             }
         self.wrong_user_data = {
@@ -33,24 +33,33 @@ class TestQuestioner(unittest.TestCase):
                             'username' : "bochie",
                             'registered' : "12-2-2019",
                             'isAdmin' : False,
-                            'password':"password",
-                            'confirm_password':"confirm_password"
+                            'password':"Password2@",
+                            'confirm_password':"confirm_Password2@"
                             }
+
+    def test_get_user(self):
+        """Testing getting users."""
+
+        response = self.client.get('/api/v1/auth')
+
+        res = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 200)
 
 
     def test_register_user(self):
-        """Testing posting a meetup."""
+        """Testing creating a user."""
 
         response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(self.user_data), content_type='application/json')
+            '/api/v1/auth', data=json.dumps(self.user_data), content_type='application/json')
 
         res = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 201)
-    def test_wrong_password_registeration(self):
-        """Testing posting a meetup."""
+
+    def test_wrong_password_registration(self):
+        """Testing password mismatch verification."""
 
         response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(self.wrong_user_data), content_type='application/json')
+            '/api/v1/auth', data=json.dumps(self.wrong_user_data), content_type='application/json')
 
         res = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 400)
