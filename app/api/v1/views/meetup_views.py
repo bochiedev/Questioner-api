@@ -1,5 +1,5 @@
 from flask import jsonify, request, make_response
-from app.api.v1.models.meetup_models import MeetupModel
+from app.api.v1.models.meetup_models import MeetupModel, MeetupRsvpModel
 from flask_restful import Resource
 
 class Meetup(Resource):
@@ -23,8 +23,17 @@ class Meetup(Resource):
         resp = _b_save.save()
         return make_response(jsonify({'data': resp, "status": 201}), 201)
 
+class MeetupRsvp(Resource):
+    def get(self,id):
+        meetup = MeetupRsvpModel().return_data(id=id)
+        return make_response(jsonify({'meetup':meetup}),200)
 
-# GET meetup  id
+    def post(self,id):
+        req_data = request.get_json()
+        meetup = id
+        user = req_data['user']
 
-# GET upcoming meetups
-# POST /meetups/<meetup-id>/rsvps
+
+        _b_save = MeetupRsvpModel(meetup,user)
+        resp = _b_save.save()
+        return make_response(jsonify({'data': resp, "status": 201}), 201)
