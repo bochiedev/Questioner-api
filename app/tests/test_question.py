@@ -4,7 +4,6 @@ from datetime import datetime
 from app import create_app
 import json
 
-
 class TestQuestioner(unittest.TestCase):
 
     def setUp(self):
@@ -33,6 +32,25 @@ class TestQuestioner(unittest.TestCase):
 
         res = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 201)
+
+    def test_question_downvote(self):
+        """Testing downvoting a question."""
+
+        response = self.client.patch(
+            '/api/v1/question/upvote/1', content_type='application/json')
+
+        res = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 200)
+
+    def test_no_question_downvote(self):
+        """Testing downvoting a question that is not there."""
+
+        response = self.client.patch(
+            '/api/v1/question/upvote/10', content_type='application/json')
+
+        res = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 404)
+
 
 
 if __name__ == '__main__':
