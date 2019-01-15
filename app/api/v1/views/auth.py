@@ -64,7 +64,7 @@ class User(Resource):
                 "status_code" : 201
             }
 
-        return make_response(jsonify({'data': response, "status_code": response['status_code']}), response['status_code'])
+        return make_response(jsonify({'data': response, "status_code ": response['status_code']}), response['status_code'])
 
 
 class UserLogin(Resource):
