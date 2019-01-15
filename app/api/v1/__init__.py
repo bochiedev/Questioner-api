@@ -4,6 +4,8 @@ from .views.main_views import Home
 from .views.meetup_views import Meetup
 from .views.auth import User, UserLogin
 from .views.question_views import QuestionView, DownvoteView, UpvoteView
+from .views.comment_views import CommentView
+
 
 
 
@@ -29,3 +31,7 @@ api.add_resource(Meetup,'/meetup')
 api.add_resource(QuestionView,'/question')
 api.add_resource(DownvoteView,'/question/downvote/<int:id>')
 api.add_resource(UpvoteView,'/question/upvote/<int:id>')
+
+
+# comment endpoints
+api.add_resource(CommentView,'/comment')

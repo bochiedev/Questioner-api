@@ -39,15 +39,13 @@ questions = [
 
 class QuestionModel(BaseModels):
 
-    def __init__(self, user=None, meetup=None, title=None, body=None, upvotes=None, downvotes=None):
+    def __init__(self, user=None, meetup=None, title=None, body=None):
         self.question_id = len(questions) + 1
         self.createdOn = datetime.now()
         self.createdBy = user
         self.meetup = meetup
         self.title = title
         self.body = body
-        self.upvotes = upvotes
-        self.downvotes = downvotes
         super().__init__("question")
 
     def save(self):
@@ -58,8 +56,8 @@ class QuestionModel(BaseModels):
             "meetup":self.meetup,
             "title" : self.title,
             "body" : self.body,
-            "upvotes":self.upvotes,
-            "downvotes":self.downvotes
+            "upvotes":0,
+            "downvotes":0
 
         }
         save_as = self.save_req(data=question)
