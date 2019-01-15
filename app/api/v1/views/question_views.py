@@ -28,6 +28,16 @@ class DownvoteView(Resource):
         else:
             return make_response(jsonify({'error':"Data does not exist"}),404)
 
+class UpvoteView(Resource):
+    def get(self, id):
+        question = QuestionModel().return_data(id=id)
+        if question is not None:
+            question['upvotes'] = question['upvotes'] + 1
+            resp = QuestionModel().update(question)
+            return make_response(jsonify({'data':resp}),200)
+        else:
+            return make_response(jsonify({'error':"Data does not exist"}),404)
+
 
 
 
