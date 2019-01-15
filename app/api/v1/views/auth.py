@@ -20,18 +20,26 @@ class User(Resource):
         check_password_match = validate.pass_match()
 
         if check_fields != True:
-            return make_response(
-                jsonify({"error": check_fields, "status": 400}), 400)
+            response = {
+                "error" : check_fields,
+                "status_code" : 400
+            }
 
         elif check_email != True:
-            return make_response(
-                jsonify({"error": check_email, "status": 400}), 400)
+            response = {
+                "error" : check_email,
+                "status_code" : 400
+            }
         elif check_password != True:
-            return make_response(
-                jsonify({"error": check_password, "status": 400}), 400)
+            response = {
+                "error" : check_password,
+                "status_code" : 400
+            }
         elif check_password_match != True:
-            return make_response(
-                jsonify({"error": check_password_match, "status": 400}), 400)
+            response = {
+                "error" : check_password_match,
+                "status_code" : 400
+            }
 
         else:
 
@@ -50,7 +58,13 @@ class User(Resource):
                                 phoneNumber, username, email, password)
 
             resp = _b_save.save()
-            return make_response(jsonify({'message': resp, "status": 201}), 201)
+
+            response = {
+                "data" : resp,
+                "status_code" : 201
+            }
+
+        return make_response(jsonify({'data': response, "status_code": response['status_code']}), response['status_code'])
 
 
 class UserLogin(Resource):
@@ -65,13 +79,13 @@ class UserLogin(Resource):
         check_email = validate.check_email()
 
         if check_fields != True:
-            resp = {
+            response = {
                 "error" : check_fields,
                 "status_code" : 400
             }
 
         elif check_email != True:
-            resp = {
+            response = {
                 "error" : check_email,
                 "status_code" : 400
             }
@@ -82,7 +96,7 @@ class UserLogin(Resource):
                 data_list = []
 
                 if user['password'] == password:
-                    resp = {
+                    response = {
                         "message" : "Successfully Logged In",
                         "status_code" : 200
 
@@ -91,18 +105,18 @@ class UserLogin(Resource):
                     return make_response(jsonify({"message": "Successfully Logged In",
                                                   "status": 200}), 200)
                 else:
-                    resp = {
+                    response = {
                         "error" : "wrong email or Password",
                         "status_code" : 401
 
                     }
 
             except:
-                resp = {
+                response = {
                     "error" : "User does not exist",
                     "status_code" : 404
 
                 }
 
-        return make_response(jsonify({"data": resp,
-                                      "status": resp['status_code']}), resp['status_code'])
+        return make_response(jsonify({"data": response,
+                                      "status": response['status_code']}), response['status_code'])
