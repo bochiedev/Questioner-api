@@ -22,3 +22,9 @@ class Meetup(Resource):
         _b_save = MeetupModel(location, happeningOn, tags, images, topic, createdBy, venue ,time)
         resp = _b_save.save()
         return make_response(jsonify({'data': resp, "status": 201}), 201)
+
+
+# GET meetup  id
+
+# GET upcoming meetups
+# POST /meetups/<meetup-id>/rsvps

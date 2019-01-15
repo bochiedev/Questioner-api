@@ -12,7 +12,7 @@ class TestQuestioner(unittest.TestCase):
         self.app = create_app("testing")
         self.client = self.app.test_client()
         self.question_data = {
-            "user" : 1,
+            "createdBy" : 1,
             "meetup" : 2,
             "title" : "question1",
             "body" : "When is the event and where is it being held?"

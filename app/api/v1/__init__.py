@@ -3,6 +3,8 @@ from flask_restful import Api
 from .views.main_views import Home
 from .views.meetup_views import Meetup
 from .views.auth import User, UserLogin
+from .views.question_views import QuestionView
+
 
 
 version1 = Blueprint('apiv1',
@@ -22,3 +24,6 @@ api.add_resource(UserLogin,'/login')
 
 # meetup endpoints
 api.add_resource(Meetup,'/meetup')
+
+# question endpoints
+api.add_resource(QuestionView,'/question')
