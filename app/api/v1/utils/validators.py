@@ -76,3 +76,8 @@ class Validator():
                 "message": "password does not match"
             }
             return resp
+        else:
+            resp = {
+                "message": True
+            }
+            return resp

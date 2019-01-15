@@ -1,8 +1,8 @@
 from flask import jsonify, request, make_response
 from app.api.v1.models.auth_models import UserModel
-from app.api.v1.models.auth_models import Users
 from flask_restful import Resource
 from app.api.v1.utils.validators import Validator
+from app.api.v1.utils.auth import login
 import sys
 
 
@@ -37,3 +37,22 @@ class User(Resource):
         else:
             return make_response(jsonify({"error": "Passwords don't match",
                                           "status": 400}), 400)
+
+class UserLogin(Resource):
+    def post(self):
+        data = request.get_json()
+        email = data['email']
+        password = data['password']
+
+        user = UserModel().return_data(email=email)
+        print(user, file=sys.stdout)
+        data_list = []
+
+        if user != None:
+            if user['password'] == password:
+
+                return make_response(jsonify({"message": "Successfully Logged In",
+                                              "status": 200}), 200)
+            else:
+                return make_response(jsonify({"error": "wrong password",
+                                              "status": 401}), 401)

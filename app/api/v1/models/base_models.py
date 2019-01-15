@@ -59,9 +59,17 @@ class BaseModels:
             db = self.meetup_db
             return db
 
-    def return_data(self):
+    def return_data(self, email=None):
         data = self.check_db()
+        if email:
+            for user in data:
+                if user['email'] == email:
+                    return user
+                else:
+                    return None
         return data
+
+
 
     def save_req(self, data={}):
         db = self.check_db()

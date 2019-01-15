@@ -37,9 +37,14 @@ class TestQuestioner(unittest.TestCase):
                             'confirm_password':"confirm_Password2@"
                             }
 
+        self.wrong_login_data = {
+                            'email' : "email@gmail.com",
+                            'password':"Password"
+
+                            }
         self.login_data = {
-                            'email' : "bochirgfx@gmail.com",
-                            'password':"Password2@"
+                            'email' : "email2@gmail.com",
+                            'password':"password2"
 
                             }
 
@@ -78,6 +83,15 @@ class TestQuestioner(unittest.TestCase):
 
         res = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 200)
+
+    def test_wrong_password_user_login(self):
+        """Testing wrong password user login."""
+
+        response = self.client.post(
+            '/api/v1/login', data=json.dumps(self.wrong_login_data), content_type='application/json')
+
+        res = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 401)
 
 
 
