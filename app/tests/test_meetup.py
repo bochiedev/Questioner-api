@@ -6,7 +6,6 @@ import json
 
 
 class TestQuestioner(unittest.TestCase):
-    """This class represents storemanger products posted test class"""
 
     def setUp(self):
         """Define test variables and initialize app."""
