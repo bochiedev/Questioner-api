@@ -17,7 +17,7 @@ class User(Resource):
         check_fields = validate.check_fields()
         check_password = validate.check_password()
         check_email = validate.check_email()
-        check_password_match= validate.pass_match()
+        check_password_match = validate.pass_match()
 
         if check_fields != True:
             return make_response(
@@ -52,6 +52,7 @@ class User(Resource):
             resp = _b_save.save()
             return make_response(jsonify({'message': resp, "status": 201}), 201)
 
+
 class UserLogin(Resource):
     def post(self):
         data = request.get_json()
@@ -61,16 +62,19 @@ class UserLogin(Resource):
         validate = Validator(data)
 
         check_fields = validate.check_fields()
-        check_password = validate.check_password()
         check_email = validate.check_email()
 
         if check_fields != True:
-            return make_response(
-                jsonify({"error": check_fields, "status": 400}), 400)
+            resp = {
+                "error" : check_fields,
+                "status_code" : 400
+            }
 
         elif check_email != True:
-            return make_response(
-                jsonify({"error": check_email, "status": 400}), 400)
+            resp = {
+                "error" : check_email,
+                "status_code" : 400
+            }
         else:
             try:
                 user = UserModel().return_data(email=email)
@@ -78,13 +82,27 @@ class UserLogin(Resource):
                 data_list = []
 
                 if user['password'] == password:
+                    resp = {
+                        "message" : "Successfully Logged In",
+                        "status_code" : 200
+
+                    }
 
                     return make_response(jsonify({"message": "Successfully Logged In",
                                                   "status": 200}), 200)
                 else:
-                    return make_response(jsonify({"error": "wrong email or Password",
-                                                  "status": 401}), 401)
+                    resp = {
+                        "error" : "wrong email or Password",
+                        "status_code" : 401
+
+                    }
 
             except:
-                return make_response(jsonify({"error": "User does not exist",
-                                              "status": 404}), 404)
+                resp = {
+                    "error" : "User does not exist",
+                    "status_code" : 404
+
+                }
+
+        return make_response(jsonify({"data": resp,
+                                      "status": resp['status_code']}), resp['status_code'])
