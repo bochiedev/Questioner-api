@@ -11,7 +11,7 @@ Users = [
         "email": "email@gmail.com",
         'phoneNumber': "254722241161",
         'registered': "registered",
-        "password": "password",
+        "password": "Password",
         'isAdmin': True,
     },
     {
