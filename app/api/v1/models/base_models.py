@@ -65,40 +65,39 @@ meetup_list = [
 
 question_list = [
     {
-        "id" : 1,
-        "createdOn" : datetime.now(),
-        "createdBy" : 1,
-        "meetup" : 1,
-        "title" : "when is the event",
-        "body" : "When is this event being held?",
-        "upvotes" : 4,
-        "downvotes" : 32
+        "id": 1,
+        "createdOn": datetime.now(),
+        "createdBy": 1,
+        "meetup": 1,
+        "title": "when is the event",
+        "body": "When is this event being held?",
+        "upvotes": 4,
+        "downvotes": 32
 
     },
     {
-        "id" : 2,
-        "createdOn" : datetime.now(),
-        "createdBy" : 2,
-        "meetup" : 2,
-        "title" : "where is the event",
-        "body" : "Where is this event being held and when is that?",
-        "votes" : 23,
-        "downvotes" : 2,
+        "id": 2,
+        "createdOn": datetime.now(),
+        "createdBy": 2,
+        "meetup": 2,
+        "title": "where is the event",
+        "body": "Where is this event being held and when is that?",
+        "upvotes": 23,
+        "downvotes": 2,
 
     },
     {
-        "id" : 3,
-        "createdOn" : datetime.now(),
-        "createdBy" : 3,
-        "meetup" : 3,
-        "title" : "event about",
-        "body" : "What is this event about?",
-        "votes" : 13,
-        "downvotes" : 3,
+        "id": 3,
+        "createdOn": datetime.now(),
+        "createdBy": 3,
+        "meetup": 3,
+        "title": "event about",
+        "body": "What is this event about?",
+        "upvotes": 13,
+        "downvotes": 3,
 
     }
 ]
-
 
 
 class BaseModels:
@@ -109,7 +108,6 @@ class BaseModels:
         self.meetup_db = meetup_list
         self.question_db = question_list
 
-
     def check_db(self):
         if self.db == "user":
             db = self.user_db
@@ -118,27 +116,27 @@ class BaseModels:
         elif self.db == "meetup":
             db = self.meetup_db
             return db
+
         elif self.db == "question":
             db = self.question_db
             return db
 
     def return_data(self, email=None, id=None):
         data = self.check_db()
-        if email:
-            for user in data:
-                if user['email'] == email:
-                    return user
-                else:
-                    return None
-        elif id:
-            for user in data:
-                if user['id'] == id:
-                    return user
-                else:
-                    return None
+        _data = None
+        if email is not None:
+            for item in data:
+                if item['email'] == email:
+                    _data = item
+            return _data
+
+        elif id is not None:
+            for item in data:
+                if item['id'] == id:
+                    _data = item
+
+            return _data
         return data
-
-
 
     def save_req(self, data={}):
         db = self.check_db()

@@ -37,6 +37,7 @@ class User(Resource):
             return make_response(jsonify({"error": "Passwords don't match",
                                           "status": 400}), 400)
 
+
 class UserLogin(Resource):
     def post(self):
         data = request.get_json()
@@ -47,11 +48,14 @@ class UserLogin(Resource):
         print(user, file=sys.stdout)
         data_list = []
 
-        if user != None:
+        if user is not None:
             if user['password'] == password:
 
                 return make_response(jsonify({"message": "Successfully Logged In",
                                               "status": 200}), 200)
             else:
-                return make_response(jsonify({"error": "wrong password",
+                return make_response(jsonify({"error": "wrong email or Password",
                                               "status": 401}), 401)
+        else:
+            return make_response(jsonify({"error": "User does not exist",
+                                          "status": 404}), 404)

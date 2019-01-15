@@ -20,7 +20,7 @@ questions = [
         "meetup" : 2,
         "title" : "where is the event",
         "body" : "Where is this event being held and when is that?",
-        "votes" : 23,
+        "upvotes" : 23,
         "downvotes" : 2,
 
     },
@@ -31,7 +31,7 @@ questions = [
         "meetup" : 3,
         "title" : "event about",
         "body" : "What is this event about?",
-        "votes" : 13,
+        "upvotes" : 13,
         "downvotes" : 3,
 
     }
@@ -48,8 +48,6 @@ class QuestionModel(BaseModels):
         self.body = body
         self.upvotes = upvotes
         self.downvotes = downvotes
-
-
         super().__init__("question")
 
     def save(self):
@@ -67,3 +65,7 @@ class QuestionModel(BaseModels):
         save_as = self.save_req(data=question)
 
         return save_as
+
+    def update(self, data):
+        data = data
+        return data
