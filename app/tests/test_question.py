@@ -36,8 +36,8 @@ class TestQuestioner(unittest.TestCase):
     def test_question_downvote(self):
         """Testing downvoting a question."""
 
-        response = self.client.patch(
-            '/api/v1/question/upvote/1', content_type='application/json')
+        response = self.client.get(
+            '/api/v1/question/downvote/1', content_type='application/json')
 
         res = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 200)
@@ -45,8 +45,8 @@ class TestQuestioner(unittest.TestCase):
     def test_no_question_downvote(self):
         """Testing downvoting a question that is not there."""
 
-        response = self.client.patch(
-            '/api/v1/question/upvote/10', content_type='application/json')
+        response = self.client.get(
+            '/api/v1/question/downvote/10', content_type='application/json')
 
         res = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 404)

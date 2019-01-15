@@ -65,7 +65,3 @@ class QuestionModel(BaseModels):
         save_as = self.save_req(data=question)
 
         return save_as
-
-    def update(self, data):
-        data = data
-        return data

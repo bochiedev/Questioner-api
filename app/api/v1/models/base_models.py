@@ -145,3 +145,10 @@ class BaseModels:
 
         db.append(data)
         return data
+
+    def update(self, data={}):
+        db = self.check_db()
+        if not data:
+            return "no data "
+        else:    
+            return data
