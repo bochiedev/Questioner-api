@@ -3,7 +3,7 @@ from flask_restful import Api
 from .views.main_views import Home
 from .views.meetup_views import Meetup
 from .views.auth import User, UserLogin
-from .views.question_views import QuestionView, DownvoteView
+from .views.question_views import QuestionView, DownvoteView, UpvoteView
 
 
 
@@ -28,3 +28,4 @@ api.add_resource(Meetup,'/meetup')
 # question endpoints
 api.add_resource(QuestionView,'/question')
 api.add_resource(DownvoteView,'/question/downvote/<int:id>')
+api.add_resource(UpvoteView,'/question/upvote/<int:id>')
