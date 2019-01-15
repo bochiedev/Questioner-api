@@ -71,7 +71,6 @@ class UserLogin(Resource):
         elif check_email != True:
             return make_response(
                 jsonify({"error": check_email, "status": 400}), 400)
-
         else:
             try:
                 user = UserModel().return_data(email=email)

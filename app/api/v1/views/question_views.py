@@ -37,12 +37,3 @@ class UpvoteView(Resource):
             return make_response(jsonify({'data':resp}),200)
         else:
             return make_response(jsonify({'error':"Data does not exist"}),404)
-
-
-
-
-
-
-
-# Patch /questions/<question-id>/upvote
-# Patch /questions/<question-id>/downvote

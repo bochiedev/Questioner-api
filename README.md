@@ -34,10 +34,7 @@ To start the server just do;
 
 The server will be running on    `http://127.0.0.1:5000/`   
 Now you can include an endpoint of choice;   
-eg:   `http://127.0.0.1:5000/api/v1/register`
+eg:   `http://127.0.0.1:5000/api/v1/auth`
 
 
-You can test on postman.
-
-
-# Written by: Bochie
+You can test using postman.
