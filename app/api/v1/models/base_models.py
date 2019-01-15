@@ -178,7 +178,7 @@ class BaseModels:
         if not data:
             return "no data to save"
 
-        db.append(data)
+        
         return data
 
     def update(self, data={}):
