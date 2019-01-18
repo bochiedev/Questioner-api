@@ -6,7 +6,6 @@ import json
 
 
 class TestQuestioner(unittest.TestCase):
-    """This class represents storemanger products posted test class"""
 
     def setUp(self):
         """Define test variables and initialize app."""
@@ -22,6 +21,10 @@ class TestQuestioner(unittest.TestCase):
             "tags": ["programming", "Js"],
             "createdBy": 1,
         }
+        self.rsvp_meetup_data = {
+                	"user" : 2
+                }
+
     def test_get_meetup(self):
         """Testing getting a meetup."""
 
@@ -35,6 +38,15 @@ class TestQuestioner(unittest.TestCase):
 
         response = self.client.post(
             '/api/v1/meetup', data=json.dumps(self.meetup_data), content_type='application/json')
+
+        res = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 201)
+
+    def test_rsvp_meetup(self):
+        """Testing rsvp for a meetup."""
+
+        response = self.client.post(
+            '/api/v1/meetup/rsvp/1', data=json.dumps(self.rsvp_meetup_data), content_type='application/json')
 
         res = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 201)
