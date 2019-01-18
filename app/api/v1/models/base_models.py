@@ -42,6 +42,7 @@ user_list = [
 
 meetup_list = [
     {
+    "id":1,
         "location": "Kisumu",
         "venue": "Senteu",
         "images": [],
@@ -52,6 +53,7 @@ meetup_list = [
         "createdBy": 2,
     },
     {
+        "id":2,
         "location": "Nairobi",
         "venue": "Ihub",
         "images": [],
@@ -121,7 +123,7 @@ class BaseModels:
             db = self.question_db
             return db
 
-    def return_data(self, email=None, id=None):
+    def return_data(self, email=None, id=None,username=None):
         data = self.check_db()
         _data = None
         if email is not None:
@@ -133,6 +135,12 @@ class BaseModels:
         elif id is not None:
             for item in data:
                 if item['id'] == id:
+                    _data = item
+
+            return _data
+        elif username is not None:
+            for item in data:
+                if item['username'] == id:
                     _data = item
 
             return _data
@@ -150,5 +158,5 @@ class BaseModels:
         db = self.check_db()
         if not data:
             return "no data "
-        else:    
+        else:
             return data

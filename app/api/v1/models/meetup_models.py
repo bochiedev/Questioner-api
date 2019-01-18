@@ -3,6 +3,7 @@ from .base_models import BaseModels
 
 meetups = [
     {
+        "id":1,
         "location": "Kisumu",
         "venue": "Senteu",
         "images": [],
@@ -13,6 +14,7 @@ meetups = [
         "createdBy": 2,
     },
     {
+        "id":2,
         "location": "Nairobi",
         "venue": "Ihub",
         "images": [],

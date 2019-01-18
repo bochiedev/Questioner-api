@@ -1,5 +1,5 @@
 from flask import jsonify, request, make_response
-from flask_restful import Resource
+from flask_restplus import Resource
 
 class Home(Resource):
     def get(self):
