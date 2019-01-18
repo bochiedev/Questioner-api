@@ -16,14 +16,7 @@ version1 = Blueprint('apiv1',
 
 api = Api(version1)
 
-<<<<<<< HEAD
-
-=======
-# home endpoints
-api.add_resource(Home, '/', '/home')
-
 # home user
->>>>>>> 6c6d99b26990fe5f8499a11463893adef6d6fa0c
 api.add_resource(User,'/auth')
 api.add_resource(UserLogin,'/login')
 

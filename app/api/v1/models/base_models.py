@@ -42,6 +42,7 @@ user_list = [
 
 meetup_list = [
     {
+        "id":1,
         "location": "Kisumu",
         "venue": "Senteu",
         "images": [],
@@ -52,6 +53,7 @@ meetup_list = [
         "createdBy": 2,
     },
     {
+        "id":2,
         "location": "Nairobi",
         "venue": "Ihub",
         "images": [],
@@ -178,12 +180,17 @@ class BaseModels:
         if not data:
             return "no data to save"
 
-        
+
         return data
 
-    def update(self, data={}):
+    def delete(self, id):
         db = self.check_db()
-        if not data:
-            return "no data "
-        else:
-            return data
+        i = 0
+        for item in db:
+            i += 1
+            if item['id'] == id:
+                del db[i]
+                message = "Deleted Successfully"
+                break
+
+        return message

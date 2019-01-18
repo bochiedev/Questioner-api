@@ -9,10 +9,7 @@ coveralls==1.5.1
 docopt==0.6.2
 Flask==1.0.2
 Flask-RESTful==0.3.7
-<<<<<<< HEAD
 flask-restplus==0.12.1
-=======
->>>>>>> 6c6d99b26990fe5f8499a11463893adef6d6fa0c
 gunicorn==19.9.0
 idna==2.8
 itsdangerous==1.1.0
