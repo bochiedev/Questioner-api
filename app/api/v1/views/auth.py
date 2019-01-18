@@ -1,6 +1,6 @@
 from flask import jsonify, request, make_response
 from app.api.v1.models.auth_models import UserModel
-from flask_restful import Resource
+from flask_restplus import Resource
 from app.api.v1.utils.validators import Validator
 import sys
 

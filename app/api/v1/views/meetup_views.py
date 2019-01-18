@@ -1,6 +1,6 @@
 from flask import jsonify, request, make_response
 from app.api.v1.models.meetup_models import MeetupModel
-from flask_restful import Resource
+from flask_restplus import Resource
 
 class Meetup(Resource):
     def get(self):
