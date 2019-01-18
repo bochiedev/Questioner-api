@@ -1,6 +1,6 @@
 from flask import jsonify, request, make_response
 from app.api.v1.models.auth_models import UserModel
-from flask_restful import Resource
+from flask_restplus import Resource
 from app.api.v1.utils.validators import Validator
 import sys
 
@@ -12,6 +12,8 @@ class User(Resource):
 
     def post(self):
         data = request.get_json()
+        data_list = []
+
 
         validate = Validator(data)
         check_fields = validate.check_fields()
@@ -64,7 +66,15 @@ class User(Resource):
                 "status_code" : 201
             }
 
-        return make_response(jsonify({'data': response, "status_code ": response['status_code']}), response['status_code'])
+        if response.get('error'):
+
+            return make_response(jsonify({'error': response['error'], "status_code ": response['status_code']}), response['status_code'])
+        else:
+            data_list.append(response['data'])
+            return make_response(jsonify({'data': data_list, "status_code ": response['status_code']}), response['status_code'])
+
+
+
 
 
 class UserLogin(Resource):
@@ -92,7 +102,6 @@ class UserLogin(Resource):
         else:
             try:
                 user = UserModel().return_data(email=email)
-                print(user, file=sys.stdout)
                 data_list = []
 
                 if user['password'] == password:
@@ -118,5 +127,9 @@ class UserLogin(Resource):
 
                 }
 
-        return make_response(jsonify({"data": response,
-                                      "status": response['status_code']}), response['status_code'])
+        if response.get('error'):
+
+            return make_response(jsonify({'error': response['error'], "status_code ": response['status_code']}), response['status_code'])
+        else:
+            data_list.append(response['data'])
+            return make_response(jsonify({'data': data_list, "status_code ": response['status_code']}), response['status_code'])
