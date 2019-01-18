@@ -158,7 +158,7 @@ class BaseModels:
             db = self.comment_db
             return db
 
-    def return_data(self, email=None, id=None):
+    def return_data(self, email=None, id=None,username=None):
         data = self.check_db()
         _data = None
         if email is not None:
@@ -170,6 +170,12 @@ class BaseModels:
         elif id is not None:
             for item in data:
                 if item['id'] == id:
+                    _data = item
+
+            return _data
+        elif username is not None:
+            for item in data:
+                if item['username'] == id:
                     _data = item
 
             return _data
@@ -194,3 +200,11 @@ class BaseModels:
                 break
 
         return message
+      
+     def update(self, data={}):
+        db = self.check_db()
+        if not data:
+            return "no data "
+        else:
+            return data
+

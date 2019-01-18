@@ -1,7 +1,6 @@
 from flask import jsonify, request, make_response
 from app.api.v1.models.meetup_models import MeetupModel,MeetupRsvpModel
 from app.api.v1.models.auth_models import UserModel
-
 from flask_restplus import Resource
 
 class Meetup(Resource):
@@ -24,8 +23,6 @@ class Meetup(Resource):
 
         _b_save = MeetupModel(location, happeningOn, tags, images, topic, createdBy, venue ,time)
         resp = _b_save.save()
-
-
         data_list.append(resp)
 
         return make_response(jsonify({'data': data_list, "status": 201}), 201)
