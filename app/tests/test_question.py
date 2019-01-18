@@ -50,6 +50,23 @@ class TestQuestioner(unittest.TestCase):
 
         res = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 404)
+    def test_question_upvote(self):
+        """Testing upvoting a question."""
+
+        response = self.client.get(
+            '/api/v1/question/upvote/1', content_type='application/json')
+
+        res = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 200)
+
+    def test_no_question_upvote(self):
+        """Testing upvoting a question that is not there."""
+
+        response = self.client.get(
+            '/api/v1/question/upvote/10', content_type='application/json')
+
+        res = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 404)
 
 
 

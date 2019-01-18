@@ -1,6 +1,6 @@
 from flask import jsonify, request, make_response
 from app.api.v1.models.auth_models import UserModel
-from flask_restful import Resource
+from flask_restplus import Resource
 from app.api.v1.utils.validators import Validator
 import sys
 
@@ -12,30 +12,69 @@ class User(Resource):
 
     def post(self):
         data = request.get_json()
-        validate = Validator(data)
-        firstname = data['firstname']
-        lastname = data['lastname']
-        othername = data['othername']
-        email = data['email']
-        phoneNumber = data['phoneNumber']
-        username = data['username']
-        registered = data['registered']
-        isAdmin = data['isAdmin']
-        password = data['password']
-        confirm_password = data['confirm_password']
+        data_list = []
 
-        if password == confirm_password:
+
+        validate = Validator(data)
+        check_fields = validate.check_fields()
+        check_password = validate.check_password()
+        check_email = validate.check_email()
+        check_password_match = validate.pass_match()
+
+        if check_fields != True:
+            response = {
+                "error" : check_fields,
+                "status_code" : 400
+            }
+
+        elif check_email != True:
+            response = {
+                "error" : check_email,
+                "status_code" : 400
+            }
+        elif check_password != True:
+            response = {
+                "error" : check_password,
+                "status_code" : 400
+            }
+        elif check_password_match != True:
+            response = {
+                "error" : check_password_match,
+                "status_code" : 400
+            }
+
+        else:
+
+            firstname = data['firstname']
+            lastname = data['lastname']
+            othername = data['othername']
+            email = data['email']
+            phoneNumber = data['phoneNumber']
+            username = data['username']
+            registered = data['registered']
+            isAdmin = data['isAdmin']
+            password = data['password']
+            confirm_password = data['confirm_password']
+
             _b_save = UserModel(firstname, lastname, othername,
                                 phoneNumber, username, email, password)
 
             resp = _b_save.save()
-            data_list = []
-            data_list.append(resp)
-            return make_response(jsonify({'data': data_list, "status": 201}), 201)
 
+            response = {
+                "data" : resp,
+                "status_code" : 201
+            }
+
+        if response.get('error'):
+
+            return make_response(jsonify({'error': response['error'], "status_code ": response['status_code']}), response['status_code'])
         else:
-            return make_response(jsonify({"error": "Passwords don't match",
-                                          "status": 400}), 400)
+            data_list.append(response['data'])
+            return make_response(jsonify({'data': data_list, "status_code ": response['status_code']}), response['status_code'])
+
+
+
 
 
 class UserLogin(Resource):
@@ -44,18 +83,53 @@ class UserLogin(Resource):
         email = data['email']
         password = data['password']
 
-        user = UserModel().return_data(email=email)
-        print(user, file=sys.stdout)
-        data_list = []
+        validate = Validator(data)
 
-        if user is not None:
-            if user['password'] == password:
+        check_fields = validate.check_fields()
+        check_email = validate.check_email()
 
-                return make_response(jsonify({"message": "Successfully Logged In",
-                                              "status": 200}), 200)
-            else:
-                return make_response(jsonify({"error": "wrong email or Password",
-                                              "status": 401}), 401)
+        if check_fields != True:
+            response = {
+                "error" : check_fields,
+                "status_code" : 400
+            }
+
+        elif check_email != True:
+            response = {
+                "error" : check_email,
+                "status_code" : 400
+            }
         else:
-            return make_response(jsonify({"error": "User does not exist",
-                                          "status": 404}), 404)
+            try:
+                user = UserModel().return_data(email=email)
+                data_list = []
+
+                if user['password'] == password:
+                    response = {
+                        "message" : "Successfully Logged In",
+                        "status_code" : 200
+
+                    }
+
+                    return make_response(jsonify({"message": "Successfully Logged In",
+                                                  "status": 200}), 200)
+                else:
+                    response = {
+                        "error" : "wrong email or Password",
+                        "status_code" : 401
+
+                    }
+
+            except:
+                response = {
+                    "error" : "User does not exist",
+                    "status_code" : 404
+
+                }
+
+        if response.get('error'):
+
+            return make_response(jsonify({'error': response['error'], "status_code ": response['status_code']}), response['status_code'])
+        else:
+            data_list.append(response['data'])
+            return make_response(jsonify({'data': data_list, "status_code ": response['status_code']}), response['status_code'])

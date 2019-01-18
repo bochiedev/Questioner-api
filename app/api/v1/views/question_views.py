@@ -45,3 +45,16 @@ class DownvoteView(Resource):
 
         except:
             return make_response(jsonify({'error': "Question not Found", "status": 404}), 404)
+
+class UpvoteView(Resource):
+    def get(self, id):
+        data_list = []
+        try:
+            question = QuestionModel().return_data(id=id)
+            question['upvotes'] = question['upvotes'] + 1
+            resp = QuestionModel().update(question)
+            data_list.append(resp)
+            return make_response(jsonify({'data': data_list, "status": 200}), 200)
+         except:
+              return make_response(jsonify({'error': "Question not Found", "status": 404}), 404)
+

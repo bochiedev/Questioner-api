@@ -42,7 +42,7 @@ user_list = [
 
 meetup_list = [
     {
-    "id":1,
+        "id":1,
         "location": "Kisumu",
         "venue": "Senteu",
         "images": [],
@@ -101,6 +101,36 @@ question_list = [
     }
 ]
 
+comment_list = [
+    {
+        "id" : 1,
+        "createdOn" : datetime.now(),
+        "createdBy" : 1,
+        "question" : 1,
+        "title" : "Great question",
+        "body" : "I also wanted to know this",
+
+    },
+    {
+        "id" : 2,
+        "createdOn" : datetime.now(),
+        "createdBy" : 2,
+        "question" : 2,
+        "title" : "good question",
+        "body" : "and also what is the time",
+
+    },
+    {
+        "id" : 3,
+        "createdOn" : datetime.now(),
+        "createdBy" : 3,
+        "question" : 3,
+        "title" : "Dont ask this",
+        "body" : "Why are you asking such question",
+
+    }
+]
+
 
 class BaseModels:
 
@@ -109,6 +139,8 @@ class BaseModels:
         self.user_db = user_list
         self.meetup_db = meetup_list
         self.question_db = question_list
+        self.comment_db = comment_list
+
 
     def check_db(self):
         if self.db == "user":
@@ -121,6 +153,9 @@ class BaseModels:
 
         elif self.db == "question":
             db = self.question_db
+            return db
+        elif self.db == "comment":
+            db = self.comment_db
             return db
 
     def return_data(self, email=None, id=None,username=None):
@@ -151,12 +186,25 @@ class BaseModels:
         if not data:
             return "no data to save"
 
-        db.append(data)
+
         return data
 
-    def update(self, data={}):
+    def delete(self, id):
+        db = self.check_db()
+        i = 0
+        for item in db:
+            i += 1
+            if item['id'] == id:
+                del db[i]
+                message = "Deleted Successfully"
+                break
+
+        return message
+      
+     def update(self, data={}):
         db = self.check_db()
         if not data:
             return "no data "
         else:
             return data
+
